@@ -4,7 +4,8 @@
   * Your feature goes here (#Github Number)
 
 * Bugfixes
-  * Your bugfix goes here (#Github Number)
+  * Fix an issue where SSL binds to port 0 were not reported correctly (#1989)
+  * Fix an issue where binding to one protocol and then another would raise an exception (#1994, #1986)
 
 
 ## 4.2.0 / 2019-09-23
