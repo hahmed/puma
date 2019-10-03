@@ -45,6 +45,12 @@ def hit(uris)
   end
 end
 
+module WaitForServerLogs
+  def wait_until_server_logs(msg, server: @server)
+    Timeout.timeout(ENV["CI"] ? 30 : 5) { true while server.gets !~ Regexp.new(msg) }
+  end
+end
+
 module UniquePort
   @port  = 3211
   @mutex = Mutex.new
