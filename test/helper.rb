@@ -46,8 +46,16 @@ def hit(uris)
 end
 
 module WaitForServerLogs
-  def wait_until_server_logs(msg, server: @server)
-    Timeout.timeout(ENV["CI"] ? 30 : 5) { true while server.gets !~ Regexp.new(msg) }
+  def wait_until_server_logs(re, server: @server, timeout: 10)
+    regex = Regexp === re ? re : Regexp.new(Regexp.escape re)
+
+    l = ""
+    while IO.select([server], nil, nil, timeout) do
+      l = server.gets
+      break if l[regex]
+    end
+    assert l[regex], "Server timeout waiting for '#{re}' in:\n    #{caller(1..2)}"
+    l
   end
 end
 
