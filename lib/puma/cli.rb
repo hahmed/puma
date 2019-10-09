@@ -232,6 +232,10 @@ module Puma
             $stdout.puts o
             exit 0
           end
+
+          o.on "--plugins PLUGINS", "Add plugins to the $LOAD_PATH" do |arg|
+            user_config.plugins arg.split(':')
+          end
         end
       end
     end

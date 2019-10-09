@@ -205,6 +205,11 @@ module Puma
       @binder.close_listeners
     end
 
+    @config.plugins_to_load.each do |plugin_name|
+      plugin = Bundler.rubygems.loaded_specs(plugin_name)
+      dirs << plugin.require_paths.map { |x| File.join(plugin.full_gem_path, x) }
+    end
+
     private
 
     # If configured, write the pid of the current process out

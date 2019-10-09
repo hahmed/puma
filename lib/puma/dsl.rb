@@ -82,6 +82,10 @@ module Puma
       @plugins << @config.load_plugin(name)
     end
 
+    def plugins(plugins_to_load)
+      @config.add_plugins_to_load plugins_to_load
+    end
+
     # Use an object or block as the rack application. This allows the
     # configuration file to be the application itself.
     #
