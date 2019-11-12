@@ -16,30 +16,30 @@ class TestIntegrationPumactl < TestIntegration
 
     [@state_path, @control_path].each { |p| File.unlink(p) rescue nil }
   end
+  #
+  # def test_stop_tcp
+  #   @control_tcp_port = UniquePort.call
+  #   cli_server "-q test/rackup/sleep.ru --control-url tcp://#{HOST}:#{@control_tcp_port} --control-token #{TOKEN} -S #{@state_path}"
+  #
+  #   cli_pumactl "stop"
+  #
+  #   _, status = Process.wait2(@pid)
+  #   assert_equal 0, status
+  #
+  #   @server = nil
+  # end
 
-  def test_stop_tcp
-    @control_tcp_port = UniquePort.call
-    cli_server "-q test/rackup/sleep.ru --control-url tcp://#{HOST}:#{@control_tcp_port} --control-token #{TOKEN} -S #{@state_path}"
-
-    cli_pumactl "stop"
-
-    _, status = Process.wait2(@pid)
-    assert_equal 0, status
-
-    @server = nil
-  end
-
-  def test_stop_unix
-    skip UNIX_SKT_MSG unless UNIX_SKT_EXIST
-    cli_server "-q test/rackup/sleep.ru --control-url unix://#{@control_path} --control-token #{TOKEN} -S #{@state_path}", unix: true
-
-    cli_pumactl "stop", unix: true
-
-    _, status = Process.wait2(@pid)
-    assert_equal 0, status
-
-    @server = nil
-  end
+  # def test_stop_unix
+  #   skip UNIX_SKT_MSG unless UNIX_SKT_EXIST
+  #   cli_server "-q test/rackup/sleep.ru --control-url unix://#{@control_path} --control-token #{TOKEN} -S #{@state_path}", unix: true
+  #
+  #   cli_pumactl "stop", unix: true
+  #
+  #   _, status = Process.wait2(@pid)
+  #   assert_equal 0, status
+  #
+  #   @server = nil
+  # end
 
   def test_phased_restart_cluster
     skip NO_FORK_MSG unless HAS_FORK

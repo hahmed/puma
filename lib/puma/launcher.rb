@@ -423,6 +423,15 @@ module Puma
         rescue Exception
           log "*** SIGUSR1 not implemented, signal based restart unavailable!"
         end
+
+        begin
+          Signal.trap "SIGINFO" do
+            log_thread_status
+          end
+        rescue Exception
+          # Not going to log this one, as SIGINFO is *BSD only and would be pretty annoying
+          # to see this constantly on Linux.
+        end
       end
 
       begin
@@ -453,15 +462,6 @@ module Puma
         end
       rescue Exception
         log "*** SIGHUP not implemented, signal based logs reopening unavailable!"
-      end
-
-      begin
-        Signal.trap "SIGINFO" do
-          log_thread_status
-        end
-      rescue Exception
-        # Not going to log this one, as SIGINFO is *BSD only and would be pretty annoying
-        # to see this constantly on Linux.
       end
     end
 

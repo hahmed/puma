@@ -77,6 +77,7 @@ class TestPumaServerSSL < Minitest::Test
   def test_url_scheme_for_https
     start_server
     body = nil
+
     @http.start do
       req = Net::HTTP::Get.new "/", {}
 

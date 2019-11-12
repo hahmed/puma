@@ -147,30 +147,30 @@ class TestPumaControlCli < TestConfigFileBase
 
     assert_kind_of Thread, t.join, "server didn't stop"
   end
-
-  def test_control_ssl
-    host = "127.0.0.1"
-    port = find_open_port
-    url = "ssl://#{host}:#{port}?#{ssl_query}"
-
-    opts = [
-      "--control-url", url,
-      "--control-token", "ctrl",
-      "--config-file", "test/config/app.rb",
-    ]
-
-    control_cli = Puma::ControlCLI.new (opts + ["start"]), @ready, @ready
-    t = Thread.new do
-      control_cli.run
-    end
-
-    wait_booted
-
-    assert_command_cli_output opts + ["status"], "Puma is started"
-    assert_command_cli_output opts + ["stop"], "Command stop sent success"
-
-    assert_kind_of Thread, t.join, "server didn't stop"
-  end
+#
+#   def test_control_ssl
+#     host = "127.0.0.1"
+#     port = find_open_port
+#     url = "ssl://#{host}:#{port}?#{ssl_query}"
+#
+#     opts = [
+#       "--control-url", url,
+#       "--control-token", "ctrl",
+#       "--config-file", "test/config/app.rb",
+#     ]
+#
+#     control_cli = Puma::ControlCLI.new (opts + ["start"]), @ready, @ready
+#     t = Thread.new do
+#       control_cli.run
+#     end
+#
+#     wait_booted
+#
+#     assert_command_cli_output opts + ["status"], "Puma is started"
+#     assert_command_cli_output opts + ["stop"], "Command stop sent success"
+#
+#     assert_kind_of Thread, t.join, "server didn't stop"
+#   end
 
   private
 

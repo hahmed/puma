@@ -159,7 +159,7 @@ class TestBinderJRuby < TestBinderBase
     keystore = File.expand_path "../../examples/puma/keystore.jks", __FILE__
     ssl_cipher_list = "TLS_DHE_RSA_WITH_DES_CBC_SHA,TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA"
 
-    @binder.parse ["ssl://0.0.0.0:8080?#{ssl_query}"], @events
+    @binder.parse ["ssl://0.0.0.0:#{UniquePort.call}?#{ssl_query}"], @events
 
     assert_equal keystore, ssl_context_for_binder.keystore
     assert_equal ssl_cipher_list, ssl_context_for_binder.ssl_cipher_list

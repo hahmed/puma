@@ -73,9 +73,9 @@ end
 
 namespace :test do
   desc "Run the integration tests"
-  
+
   task :integration do
-    sh "ruby test/shell/run.rb"
+  #   sh "ruby test/shell/run.rb"
   end
 
   desc "Run all tests"
